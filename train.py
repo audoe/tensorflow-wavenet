@@ -201,9 +201,22 @@ def main():
     # Even if we restored the model, we will treat it as new training
     # if the trained model is written into an arbitrary location.
     is_overwritten_training = logdir != restore_from
-
-    with open(args.wavenet_params, 'r') as f:
-        wavenet_params = json.load(f)
+    wavenet_params = {
+    "filter_width": 2,
+    "sample_rate": 16000,
+    "dilations": [1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+                  1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+                  1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+                  1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+                  1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
+    "residual_channels": 32,
+    "dilation_channels": 32,
+    "quantization_channels": 256,
+    "skip_channels": 512,
+    "use_biases": true,
+    "scalar_input": false,
+    "initial_filter_width": 32
+    }
 
     # Create coordinator.
     coord = tf.train.Coordinator()
