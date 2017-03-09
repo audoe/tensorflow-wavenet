@@ -13,7 +13,7 @@ import json
 import os
 import sys
 import time
-
+from tensorflow import gfile
 import tensorflow as tf
 from tensorflow.python.client import timeline
 
@@ -112,8 +112,8 @@ def save(saver, sess, logdir, step):
     print('Storing checkpoint to {} ...'.format(logdir), end="")
     sys.stdout.flush()
 
-    if not os.path.exists(logdir):
-        os.makedirs(logdir)
+    if not gfile.Exists(logdir):
+        gfile.MakeDirs(logdir)
 
     saver.save(sess, checkpoint_path, global_step=step)
     print(' Done.')
